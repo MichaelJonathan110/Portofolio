@@ -1,0 +1,64 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# next.js
+/.next/
+/out/
+/build
+
+# production
+*.log
+
+# env
+.env
+!.env.example
+.env*.local
+.env.production
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# os
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# local scratch / working files
+c.css
+c2.css
+*.out
+b.txt
+d.txt
+dd.txt
+m.txt
+insp.txt
+
+# generated screenshots (not part of the site)
+/docs/shots/
+/docs/ref-desktop.png
+/docs/ref-mobile.png
+
+# one-off automation scripts (local only)
+/scripts/
+/qa.mjs
+/check.mjs
+/og.mjs
+/shots.mjs
+/ref.mjs
+/refabout.mjs
+/myfonts.mjs
+/verify.mjs
+/verify3d.mjs
+/diag.mjs
+/panelcheck.mjs
+/retrocheck.mjs

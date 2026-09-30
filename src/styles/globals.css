@@ -1,0 +1,343 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --rule: 255 255 255 / 0.09;
+    --rule-strong: 255 255 255 / 0.16;
+    --shadow-lift: 0 24px 60px -30px rgb(0 0 0 / 0.9);
+  }
+
+  * {
+    border-color: rgb(var(--rule));
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink text-paper font-sans antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #ff5c28;
+    color: #08090a;
+  }
+
+  :focus-visible {
+    outline: 2px solid #ff5c28;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-5 sm:px-8 lg:px-12;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.22em] text-faint;
+  }
+
+  .rule {
+    @apply h-px w-full bg-white/10;
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+    transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .link-underline:hover {
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* ============================================================
+   MJS DESIGN LAYER - motion, texture, type
+   Palette follows tailwind.config.ts: signal #FF5C28, paper #EDEDEA,
+   ink #08090A, muted #A2A8AE, faint #6B7176.
+   Never redefine --font-display/--font-sans/--font-mono (next/font owns them).
+   ============================================================ */
+:root {
+  --mjs-display: var(--font-display), "Space Grotesk", system-ui, sans-serif;
+  --mjs-body: var(--font-sans), "Inter", system-ui, sans-serif;
+  --mjs-mono: var(--font-mono), ui-monospace, "JetBrains Mono", monospace;
+  --mjs-bg: #08090a;
+  --mjs-ink: #ededed;
+  --mjs-muted: #a2a8ae;
+  --mjs-faint: #6b7176;
+  --mjs-accent: #ff5c28;
+  --mjs-line: rgba(237, 237, 234, 0.14);
+}
+
+@keyframes mjs-blink { 0%, 48% { opacity: 1 } 49%, 100% { opacity: 0 } }
+@keyframes mjs-marquee { from { transform: translate3d(0,0,0) } to { transform: translate3d(-50%,0,0) } }
+@keyframes mjs-shine { 0% { transform: translateX(-120%) } 100% { transform: translateX(240%) } }
+@keyframes mjs-float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+@keyframes mjs-reveal-up { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: none } }
+@keyframes mjs-pulse-dot {
+  0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,92,40,.5) }
+  50% { opacity: .75; box-shadow: 0 0 0 7px rgba(255,92,40,0) }
+}
+@keyframes mjs-spin { to { transform: rotate(360deg) } }
+@keyframes mjs-flicker {
+  0%,100% { opacity: 1 } 41% { opacity: 1 } 42% { opacity: .35 } 43% { opacity: 1 }
+  92% { opacity: 1 } 93% { opacity: .5 } 94% { opacity: 1 }
+}
+@keyframes mjs-scan { from { transform: translateY(-100%) } to { transform: translateY(400%) } }
+
+.mjs-caret { animation: mjs-blink 1s steps(1, end) infinite; color: var(--mjs-accent); }
+.mjs-flicker { animation: mjs-flicker 7s linear infinite; }
+.mjs-float { animation: mjs-float 5.5s ease-in-out infinite; }
+.mjs-spin-slow { animation: mjs-spin 14s linear infinite; }
+
+.mjs-marquee {
+  position: relative; overflow: hidden; width: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.mjs-marquee-track { display: flex; width: max-content; animation: mjs-marquee linear infinite; }
+.mjs-marquee-item {
+  display: inline-flex; align-items: center; gap: 1.25rem; padding-right: 1.25rem;
+  font-family: var(--mjs-mono); font-size: .7rem; letter-spacing: .24em;
+  text-transform: uppercase; color: var(--mjs-faint); white-space: nowrap;
+}
+.mjs-marquee-dot { color: var(--mjs-accent); }
+
+.mjs-shine { position: relative; overflow: hidden; }
+.mjs-shine::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 45%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+  transform: translateX(-140%); pointer-events: none;
+}
+.mjs-shine:hover::after { animation: mjs-shine .9s ease-out; }
+
+.mjs-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--mjs-accent); animation: mjs-pulse-dot 2.4s ease-in-out infinite; }
+
+.mjs-reveal { opacity: 0; }
+.mjs-reveal.is-in { animation: mjs-reveal-up .7s cubic-bezier(.2,.7,.2,1) forwards; }
+
+.mjs-grid-bg {
+  background-image:
+    linear-gradient(var(--mjs-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--mjs-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.mjs-card {
+  position: relative; border: 1px solid var(--mjs-line);
+  background: linear-gradient(180deg, rgba(237,237,234,.04), rgba(237,237,234,0));
+  transition: border-color .35s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.mjs-card:hover { border-color: rgba(255,92,40,.5); transform: translateY(-4px); }
+
+.mjs-link-underline { position: relative; }
+.mjs-link-underline::after {
+  content: ""; position: absolute; left: 0; bottom: -3px; height: 1px; width: 100%;
+  background: currentColor; transform: scaleX(0); transform-origin: right;
+  transition: transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.mjs-link-underline:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.mjs-hairline { border-top: 1px solid var(--mjs-line); }
+.mjs-num {
+  font-family: var(--mjs-mono); font-size: .68rem; letter-spacing: .3em;
+  color: var(--mjs-faint); text-transform: uppercase;
+}
+
+::selection { background: var(--mjs-accent); color: #08090a; }
+:focus-visible { outline: 2px solid var(--mjs-accent); outline-offset: 3px; border-radius: 2px; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #08090a; }
+::-webkit-scrollbar-thumb { background: #26292d; border: 2px solid #08090a; }
+::-webkit-scrollbar-thumb:hover { background: #3a3e44; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .mjs-reveal { opacity: 1 !important; }
+}
+
+
+/* ============================================================
+   MJS TYPE VOICE - firm, non-generic
+   ============================================================ */
+.mjs-pixel {
+  font-family: var(--font-pixel), var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+.mjs-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  font-stretch: 100%;
+}
+
+.mjs-stamp {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+/* Hard hairline rules instead of soft cards */
+.mjs-rule { border-top: 1px solid rgba(237, 237, 234, 0.16); }
+
+.mjs-hover-invert {
+  transition: background-color .25s ease, color .25s ease;
+}
+.mjs-hover-invert:hover { background: var(--mjs-accent); color: #08090a; }
+
+
+/* ============================================================
+   MJS RETRO GLITCH - video-game corruption
+   Stepped timing (not eased), hard colour tears and dropout.
+   The sizer element keeps the box steady so nothing shifts.
+   ============================================================ */
+@keyframes mjs-retro-tear-a {
+  0%, 100% { clip-path: inset(100% 0 0 0); transform: translate3d(0,0,0); opacity: 1 }
+  8%  { clip-path: inset(12% 0 72% 0); transform: translate3d(-4px,0,0) }
+  16% { clip-path: inset(100% 0 0 0) }
+  34% { clip-path: inset(58% 0 26% 0); transform: translate3d(4px,0,0) }
+  42% { clip-path: inset(100% 0 0 0) }
+  62% { clip-path: inset(30% 0 54% 0); transform: translate3d(-5px,0,0) }
+  70% { clip-path: inset(100% 0 0 0) }
+  86% { clip-path: inset(76% 0 8% 0);  transform: translate3d(3px,0,0) }
+}
+@keyframes mjs-retro-tear-b {
+  0%, 100% { clip-path: inset(100% 0 0 0); transform: translate3d(0,0,0); opacity: 1 }
+  14% { clip-path: inset(66% 0 18% 0); transform: translate3d(4px,0,0) }
+  22% { clip-path: inset(100% 0 0 0) }
+  48% { clip-path: inset(20% 0 64% 0); transform: translate3d(-4px,0,0) }
+  56% { clip-path: inset(100% 0 0 0) }
+  78% { clip-path: inset(44% 0 40% 0); transform: translate3d(5px,0,0) }
+  86% { clip-path: inset(100% 0 0 0) }
+}
+/* scanline sweep: the classic CRT roll */
+@keyframes mjs-retro-scan {
+  0% { transform: translate3d(0,-110%,0) }
+  100% { transform: translate3d(0,110%,0) }
+}
+
+.mjs-retro {
+  color: var(--mjs-accent);
+  text-shadow: 2px 0 #4ea8de, -2px 0 rgba(255,255,255,.75);
+  animation: mjs-retro-flicker 0.9s steps(1, end) infinite;
+}
+.mjs-retro::before,
+.mjs-retro::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.mjs-retro::before {
+  color: #4ea8de;
+  animation: mjs-retro-tear-a 1.7s steps(1, end) infinite;
+}
+.mjs-retro::after {
+  color: #ffffff;
+  mix-blend-mode: screen;
+  animation: mjs-retro-tear-b 2.3s steps(1, end) infinite;
+}
+@keyframes mjs-retro-flicker {
+  0%, 100% { opacity: 1 }
+  47% { opacity: 1 }
+  48% { opacity: .28 }
+  49% { opacity: 1 }
+  71% { opacity: 1 }
+  72% { opacity: .45 }
+  73% { opacity: 1 }
+}
+
+/* CRT scanline overlay, only while the hero is on screen */
+.mjs-scanlines {
+  position: relative;
+}
+.mjs-scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,.045) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mjs-retro, .mjs-retro::before, .mjs-retro::after {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .mjs-retro::before, .mjs-retro::after { content: none; }
+}
