@@ -47,7 +47,7 @@ export function About() {
                 that motivation will not.
               </p>
               <p>
-                Right now I am building LangitNusa and Trinity, and learning as much as I can along
+                Right now I am building LangitNusa, Trinity and Rally, and learning as much as I can along
                 the way.
               </p>
             </div>

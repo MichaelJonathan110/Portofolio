@@ -9,12 +9,12 @@ import { projects } from "@/content/projects";
  * rather than shipped as filler cards.
  */
 export function Projects() {
-  const featured = projects.filter((p) => !p.placeholder).slice(0, 2);
+  const featured = projects.filter((p) => !p.placeholder);
 
   return (
     <section id="work" className="relative scroll-mt-24 py-24 sm:py-32">
       <div className="mx-auto w-full max-w-shell px-6">
-        <SectionHeader index="02" eyebrow="Selected Work" title="Two builds, taken seriously." />
+        <SectionHeader index="02" eyebrow="Selected Work" title="Three builds, taken seriously." />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-2">
           {featured.map((p, i) => (
