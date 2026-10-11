@@ -30,21 +30,35 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'langitnusa',
+    id: 'retailflow',
     index: '01',
-    name: 'LangitNusa',
-    category: 'Weather Prediction',
+    name: 'RetailFlow',
+    category: 'Data Engineering',
     summary:
-      'A weather prediction application, and one of the projects I am building right now.',
+      'An enterprise retail data warehouse, ETL automation and analytics platform - source files in, verified business analytics out.',
     description:
-      'LangitNusa is a weather prediction application. It is one of the projects I am currently developing and exploring.',
-    technologies: ['TypeScript'],
+      'RetailFlow is a complete, runnable data-engineering platform. It takes retail source files through ingestion, validation, transformation and loading into a PostgreSQL dimensional warehouse, then serves business analytics and operational monitoring over it. CSV sources flow into staging, through data-quality rules, into SCD2 dimensions and fact tables, and out through analytics views, an API and a UI.',
+    technologies: [
+      'Python',
+      'FastAPI',
+      'PostgreSQL',
+      'SQLAlchemy',
+      'Docker',
+      'Next.js',
+      'TypeScript',
+      'Pydantic',
+    ],
     accent: '#4EA8DE',
-    visual: 'Atmosphere, cloud cover and weather data.',
+    visual: 'Warehouse schemas, ETL runs and analytics dashboards.',
     links: [
       {
+        label: 'Live demo',
+        href: 'https://retail-flow-app-omega.vercel.app/',
+        kind: 'live',
+      },
+      {
         label: 'GitHub',
-        href: 'https://github.com/MichaelJonathan110/LangitNusa',
+        href: 'https://github.com/MichaelJonathan110/RetailFlow',
         kind: 'github',
       },
     ],
@@ -52,25 +66,41 @@ export const projects: Project[] = [
       {
         id: 'overview',
         title: 'Overview',
-        body: 'LangitNusa is a weather prediction application. It is one of the projects I am currently developing and exploring.',
+        body: 'RetailFlow is an enterprise retail data warehouse, ETL automation and analytics platform. Retail source files move through ingestion, validation, transformation and loading into a PostgreSQL dimensional warehouse, and business analytics and operational monitoring are served over it. It is a complete, runnable platform rather than a mockup or a chart gallery.',
+      },
+      {
+        id: 'pipeline',
+        title: 'Pipeline',
+        body: 'CSV sources -> staging -> data-quality rules -> SCD2 dimensions and fact tables -> analytics views -> API -> UI. Every stage is observable: runs and per-stage timings are logged, rejected records are quarantined with their reason and raw payload, and reconciliation compares fact aggregates with an explicit tolerance.',
+      },
+      {
+        id: 'data-model',
+        title: 'Data model',
+        body: 'A star schema in PostgreSQL 16 across five schemas: five dimensions, with a slowly changing dimension type 2 on customer, and two fact tables at different grains. The two facts are never joined to each other - revenue is measured from fact_order_items and payments from fact_payments, then compared as aggregates. Analytics views expose one row per order as the correct denominator for average order value.',
+      },
+      {
+        id: 'architecture',
+        title: 'Architecture',
+        body: 'A FastAPI backend with more than forty endpoints, an OpenAPI surface and a consistent error envelope sits over the warehouse, with services split by concern - ingestion, rules, transform, reconciliation and pipeline orchestration. A Next.js front end with ten pages is wired to the real API, and the whole stack runs from Docker Compose against deterministic, defect-injected synthetic fixtures.',
+      },
+      {
+        id: 'engineering',
+        title: 'Engineering',
+        body: 'Ingestion is idempotent by SHA-256 and loads are idempotent too, so re-running a pipeline adds nothing. Data-quality rules are data, not code - twelve are seeded - and every rule result, pass rate and rejected row stays inspectable. A pytest suite covers unit, API and database layers plus an end-to-end acceptance test that asserts a second run loads zero additional rows.',
       },
       {
         id: 'technology',
         title: 'Technology',
-        body: 'Written in TypeScript. The source is public on GitHub.',
+        body: 'Backend: Python, FastAPI, Pydantic, SQLAlchemy 2.0, PostgreSQL 16, Docker Compose. Front end: Next.js 15, TypeScript, React. Tooling: pytest and GitHub Actions CI. Pentaho .ktr/.kjb artifacts and a Power BI semantic model with DAX measures are authored as design artifacts.',
+      },
+      {
+        id: 'status',
+        title: 'Status',
+        body: 'A working build: a PostgreSQL 16 warehouse in Docker, a star schema with SCD2, a rule-driven quality engine, idempotent ingestion and loads, reconciliation, a FastAPI backend with more than forty endpoints and a Next.js UI wired to the live API. Limitations are documented honestly - no .pbix binary, Pentaho jobs authored but not executed, and authentication disabled by default.',
       },
     ],
     placeholder: false,
-    todo: [
-      'Problem',
-      'Solution',
-      'Research',
-      'Architecture',
-      'Development',
-      'Challenges',
-      'Results',
-      'Screenshots',
-    ],
+    todo: [],
   },
   {
     id: 'trinity',
