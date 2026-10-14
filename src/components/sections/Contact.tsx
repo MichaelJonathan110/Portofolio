@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { CvButton } from "@/components/ui/CvButton";
 import { ScrambleText } from "@/components/ui/ScrambleText";
 import { SocialIcon } from "@/components/ui/Icons";
 import { site, socials } from "@/content/site";
@@ -43,6 +44,7 @@ export function Contact() {
         </p>
 
         <div className="mt-12 flex flex-wrap items-center gap-4">
+          <CvButton href={site.cvHref} hint={site.cvNote} size="lg" />
           <Button href={`mailto:${site.email}`} variant="primary" size="lg">
             {site.email}
           </Button>

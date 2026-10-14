@@ -1,5 +1,6 @@
 import { HeroDoor } from "@/components/three/HeroDoor";
 import { Button } from "@/components/ui/Button";
+import { CvButton } from "@/components/ui/CvButton";
 import { Marquee } from "@/components/ui/Marquee";
 import { ScrambleText } from "@/components/ui/ScrambleText";
 import { GlitchText } from "@/components/ui/GlitchText";
@@ -45,6 +46,7 @@ export function Hero() {
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
+          <CvButton href={site.cvHref} hint={site.cvNote} size="lg" />
           <Button href="#work" variant="primary" size="lg">View projects</Button>
           <Button href="#contact" variant="outline" size="lg">Get in touch</Button>
         </div>

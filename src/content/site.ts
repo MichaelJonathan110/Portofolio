@@ -16,6 +16,8 @@ export const site = {
   intro:
     'Computer Science at BINUS University. I like the part of the work where a messy dataset turns into something you can actually read, and I spend the rest of my time in the gym or on a court.',
   email: 'mekkjo123@gmail.com',
+  cvHref: '/Michael-Jonathan-Susilo-CV.pdf',
+  cvNote: 'PDF · 128 KB',
   contactHeadline: "Let's build something.",
   contactNote:
     'Open to internships, collaboration, and any conversation about data, databases or software.',

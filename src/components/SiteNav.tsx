@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { navItems, site } from '@/content/site';
+import { DownloadIcon } from '@/components/ui/Icons';
 import { cn } from '@/lib/utils';
 
 export function SiteNav() {
@@ -69,6 +70,15 @@ export function SiteNav() {
           ))}
         </ul>
 
+        <a
+          href={site.cvHref}
+          download
+          className="group ml-8 hidden items-center gap-2 border border-signal px-4 py-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-signal transition-colors duration-300 hover:bg-signal hover:text-ink md:inline-flex"
+        >
+          <DownloadIcon className="h-3.5 w-3.5 transition-transform duration-500 ease-editorial group-hover:translate-y-0.5" />
+          CV
+        </a>
+
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
@@ -96,6 +106,16 @@ export function SiteNav() {
               </a>
             </li>
           ))}
+          <li className="pt-2">
+            <a
+              href={site.cvHref}
+              download
+              className="inline-flex items-center gap-2 border border-signal px-4 py-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-signal"
+            >
+              <DownloadIcon className="h-3.5 w-3.5" />
+              Download CV
+            </a>
+          </li>
         </ul>
       )}
     </header>
