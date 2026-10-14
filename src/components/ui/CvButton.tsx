@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { DownloadIcon } from "@/components/ui/Icons";
 
@@ -13,75 +12,60 @@ interface Props {
 }
 
 const SIZES = {
-  md: "h-12 gap-4 pl-5 pr-4 text-[0.72rem]",
-  lg: "h-14 gap-6 pl-7 pr-5 text-[0.78rem]",
-} as const;
-
-const BADGE = {
-  md: "h-8 w-8",
-  lg: "h-10 w-10",
+  md: {
+    root: "h-12",
+    action: "gap-2.5 pl-5 pr-4 text-[0.7rem]",
+    glyph: "h-4 w-4",
+    meta: "px-3.5 text-[0.6rem]",
+  },
+  lg: {
+    root: "h-14",
+    action: "gap-3 pl-7 pr-5 text-[0.78rem]",
+    glyph: "h-[1.05rem] w-[1.05rem]",
+    meta: "px-5 text-[0.66rem]",
+  },
 } as const;
 
 /**
- * The CV call-to-action. Solid signal fill so it reads as the single most
- * important action on the page; hard edges, tracked mono caps, and a download
- * arrow that drops on hover. No rounded corners, no bounce.
+ * The CV action. A single solid signal block split by a hairline: the action on
+ * the left, the real file spec on the right. Resting state carries the accent so
+ * it reads as the page's primary action; hover inverts to paper, and that state
+ * change IS the feedback. No cursor gradient, no shine sweep, no glow, no lift.
+ * The one download glyph is a direction cue (the action genuinely has a
+direction), not decoration.
  */
 export function CvButton({ href, label = "Download CV", hint, size = "lg", className }: Props) {
-  const ref = useRef<HTMLAnchorElement | null>(null);
-
-  const onMove = (e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
-    el.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
-  };
+  const s = SIZES[size];
 
   return (
     <a
-      ref={ref}
       href={href}
       download
-      onMouseMove={onMove}
-      aria-label={hint ? `${label} (${hint})` : label}
+      aria-label={hint ? `${label} — ${hint}` : label}
       className={cn(
-        "mjs-cv group relative inline-flex select-none items-center justify-between overflow-hidden",
-        "bg-signal font-medium uppercase tracking-[0.2em] text-ink",
-        "outline-none transition-transform duration-300 ease-editorial hover:-translate-y-0.5",
-        "focus-visible:ring-2 focus-visible:ring-paper focus-visible:ring-offset-2 focus-visible:ring-offset-ink",
-        SIZES[size],
+        "mjs-cv group inline-flex select-none items-stretch",
+        "bg-signal text-ink transition-colors duration-200 ease-editorial hover:bg-paper",
+        "outline-none focus-visible:ring-2 focus-visible:ring-paper focus-visible:ring-offset-2 focus-visible:ring-offset-ink",
+        s.root,
         className
       )}
     >
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ background: "radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.5), transparent 62%)" }}
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 -left-1/3 z-0 w-1/3 -skew-x-12 bg-white/30 opacity-0 transition-all duration-700 ease-editorial group-hover:left-[130%] group-hover:opacity-100"
-      />
+      <span className={cn("flex items-center font-medium uppercase tracking-[0.2em]", s.action)}>
+        <DownloadIcon
+          aria-hidden="true"
+          className={cn("shrink-0 transition-transform duration-300 ease-editorial group-hover:translate-y-0.5", s.glyph)}
+        />
+        {label}
+      </span>
 
-      <span className="relative z-10 flex flex-col items-start leading-none">
-        <span className="flex items-center gap-2 whitespace-nowrap">{label}</span>
-        {hint ? (
-          <span className="mt-1.5 font-mono text-[0.58rem] font-normal tracking-[0.24em] text-ink/65">
+      {hint ? (
+        <>
+          <span aria-hidden="true" className="my-3 w-px shrink-0 bg-ink/25" />
+          <span className={cn("flex items-center font-mono uppercase tracking-[0.18em] text-ink/70", s.meta)}>
             {hint}
           </span>
-        ) : null}
-      </span>
-
-      <span
-        aria-hidden="true"
-        className={cn(
-          "relative z-10 grid shrink-0 place-items-center bg-ink text-signal transition-transform duration-500 ease-editorial group-hover:translate-y-1",
-          BADGE[size]
-        )}
-      >
-        <DownloadIcon className="h-4 w-4" />
-      </span>
+        </>
+      ) : null}
     </a>
   );
 }
